@@ -652,7 +652,7 @@ class Builder
             ->setConnection($this->query->getConnection()->getName());
     }
 
-    public function create ($attributes = [])
+    public function create($attributes = [])
     {
         return tap($this->newModelInstance($attributes), static function ($instance) {
             $instance->save();

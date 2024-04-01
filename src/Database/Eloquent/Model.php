@@ -38,10 +38,10 @@ abstract class Model implements ArrayAccess, UrlRoutable, Arrayable, Jsonable, J
 
     /**
      * Indicates if the model exists.
-     *
-     * @var bool
      */
     public bool $exists = false;
+
+    public bool $wasRecentlyCreated = false;
 
     /**
      * Indicates if an exception should be thrown when trying to access a missing attribute on a retrieved model.
@@ -109,8 +109,6 @@ abstract class Model implements ArrayAccess, UrlRoutable, Arrayable, Jsonable, J
      * @var array
      */
     protected static $booted = [];
-
-    public bool $wasRecentlyCreated = false;
 
     /**
      * Create a new Eloquent model instance.
@@ -454,43 +452,31 @@ abstract class Model implements ArrayAccess, UrlRoutable, Arrayable, Jsonable, J
 
     public function resolveRouteBinding($value, $field = null): ?Model
     {
-        return $this->resolveRouteBindingQuery($this, $value, $field)->first();
+        return $this->resolveRouteBindingQuery($this, $value, $field)
+            ->first();
     }
 
     public function resolveSoftDeletableRouteBinding(mixed $value, ?string $field = null): ?Model
     {
-        return $this->resolveRouteBindingQuery($this, $value, $field)->withTrashed()->first();
+        return $this->resolveRouteBindingQuery($this, $value, $field)
+            ->withTrashed()
+            ->first();
     }
 
     public function resolveChildRouteBinding($childType, $value, $field): ?Model
     {
-        return $this->resolveChildRouteBindingQuery($childType, $value, $field)->first();
+        return $this->resolveChildRouteBindingQuery($childType, $value, $field)
+            ->first();
     }
 
-    public function resolveSoftDeletableChildRouteBinding(string $childType, mixed $value, ?string $field = null): ?Model
-    {
-        return $this->resolveChildRouteBindingQuery($childType, $value, $field)->withTrashed()->first();
-    }
-
-    protected function resolveChildRouteBindingQuery(string $childType, mixed $value, ?string $field = null): Relation|Model
-    {
-        $relationship = $this->{$this->childRouteBindingRelationshipName($childType)}();
-
-        $field = $field ?: $relationship->getRelated()->getRouteKeyName();
-
-        if ($relationship instanceof HasManyThrough ||
-            $relationship instanceof BelongsToMany) {
-            $field = $relationship->getRelated()->getTable().'.'.$field;
-        }
-
-        return $relationship instanceof Model
-            ? $relationship->resolveRouteBindingQuery($relationship, $value, $field)
-            : $relationship->getRelated()->resolveRouteBindingQuery($relationship, $value, $field);
-    }
-
-    protected function childRouteBindingRelationshipName(string $childType): string
-    {
-        return Str::plural(Str::camel($childType));
+    public function resolveSoftDeletableChildRouteBinding(
+        string $childType,
+        mixed $value,
+        ?string $field = null
+    ): ?Model {
+        return $this->resolveChildRouteBindingQuery($childType, $value, $field)
+            ->withTrashed()
+            ->first();
     }
 
     public function resolveRouteBindingQuery(Relation|Model $query, mixed $value, ?string $field = null): Builder
@@ -584,8 +570,6 @@ abstract class Model implements ArrayAccess, UrlRoutable, Arrayable, Jsonable, J
 
     /**
      * Set the number of models to return per page.
-     *
-     * @return static
      */
     public function setPerPage(int $perPage): static
     {
@@ -640,6 +624,33 @@ abstract class Model implements ArrayAccess, UrlRoutable, Arrayable, Jsonable, J
     public static function preventsAccessingMissingAttributes(): bool
     {
         return static::$modelsShouldPreventAccessingMissingAttributes;
+    }
+
+    protected function resolveChildRouteBindingQuery(
+        string $childType,
+        mixed $value,
+        ?string $field = null
+    ): Relation|Model {
+        $relationship = $this->{$this->childRouteBindingRelationshipName($childType)}();
+
+        $field = $field !== null && $field !== '' && $field !== '0' ? $field : $relationship->getRelated()
+            ->getRouteKeyName();
+
+        if ($relationship instanceof HasManyThrough ||
+            $relationship instanceof BelongsToMany) {
+            $field = $relationship->getRelated()
+                ->getTable().'.'.$field;
+        }
+
+        return $relationship instanceof Model
+            ? $relationship->resolveRouteBindingQuery($relationship, $value, $field)
+            : $relationship->getRelated()
+                ->resolveRouteBindingQuery($relationship, $value, $field);
+    }
+
+    protected function childRouteBindingRelationshipName(string $childType): string
+    {
+        return Str::plural(Str::camel($childType));
     }
 
     /**
