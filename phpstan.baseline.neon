@@ -36,11 +36,6 @@ parameters:
 			path: src/Database/Eloquent/Builder.php
 
 		-
-			message: "#^Call to an undefined method Bavix\\\\LaravelClickHouse\\\\Database\\\\Eloquent\\\\Builder\\:\\:forPage\\(\\)\\.$#"
-			count: 1
-			path: src/Database/Eloquent/Builder.php
-
-		-
 			message: "#^Call to an undefined method Bavix\\\\LaravelClickHouse\\\\Database\\\\Eloquent\\\\Builder\\:\\:forPageAfterId\\(\\)\\.$#"
 			count: 1
 			path: src/Database/Eloquent/Builder.php
@@ -287,6 +282,11 @@ parameters:
 
 		-
 			message: "#^Method Bavix\\\\LaravelClickHouse\\\\Database\\\\Eloquent\\\\Builder\\:\\:where\\(\\) has parameter \\$column with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: src/Database/Eloquent/Builder.php
+
+		-
+			message: "#^Method Bavix\\\\LaravelClickHouse\\\\Database\\\\Query\\\\Builder\\:\\:get\\(\\) invoked with 1 parameter, 0 required\\.$#"
 			count: 1
 			path: src/Database/Eloquent/Builder.php
 
@@ -912,7 +912,7 @@ parameters:
 
 		-
 			message: "#^Cannot cast mixed to int\\.$#"
-			count: 1
+			count: 2
 			path: src/Database/Query/Builder.php
 
 		-
@@ -926,7 +926,17 @@ parameters:
 			path: src/Database/Query/Builder.php
 
 		-
+			message: "#^Method Bavix\\\\LaravelClickHouse\\\\Database\\\\Query\\\\Builder\\:\\:forPage\\(\\) should return \\$this\\(Bavix\\\\LaravelClickHouse\\\\Database\\\\Query\\\\Builder\\) but returns static\\(Bavix\\\\LaravelClickHouse\\\\Database\\\\Query\\\\Builder\\)\\.$#"
+			count: 1
+			path: src/Database/Query/Builder.php
+
+		-
 			message: "#^Method Bavix\\\\LaravelClickHouse\\\\Database\\\\Query\\\\Builder\\:\\:get\\(\\) return type with generic class Illuminate\\\\Support\\\\Collection does not specify its types\\: TKey, TValue$#"
+			count: 1
+			path: src/Database/Query/Builder.php
+
+		-
+			message: "#^Method Bavix\\\\LaravelClickHouse\\\\Database\\\\Query\\\\Builder\\:\\:getCountForPagination\\(\\) has no return type specified\\.$#"
 			count: 1
 			path: src/Database/Query/Builder.php
 
@@ -947,6 +957,11 @@ parameters:
 
 		-
 			message: "#^Method Bavix\\\\LaravelClickHouse\\\\Database\\\\Query\\\\Builder\\:\\:insertFiles\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: src/Database/Query/Builder.php
+
+		-
+			message: "#^Parameter \\#1 \\$table of method Tinderbox\\\\ClickhouseBuilder\\\\Integrations\\\\Laravel\\\\Connection\\:\\:table\\(\\) expects Closure\\|string\\|Tinderbox\\\\ClickhouseBuilder\\\\Integrations\\\\Laravel\\\\Builder, static\\(Bavix\\\\LaravelClickHouse\\\\Database\\\\Query\\\\Builder\\) given\\.$#"
 			count: 1
 			path: src/Database/Query/Builder.php
 
