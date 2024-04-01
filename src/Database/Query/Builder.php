@@ -10,6 +10,7 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Traits\Macroable;
 use Tinderbox\Clickhouse\Common\Format;
 use Tinderbox\ClickhouseBuilder\Query\BaseBuilder;
+use Tinderbox\ClickhouseBuilder\Query\Expression;
 use Tinderbox\ClickhouseBuilder\Query\Grammar;
 
 class Builder extends BaseBuilder
@@ -123,6 +124,29 @@ class Builder extends BaseBuilder
         }
 
         return $this->connection->insert($this->grammar->compileInsert($this, $values), Arr::flatten($values));
+    }
+
+    public function getCountForPagination()
+    {
+        return (int) $this->getConnection()
+            ->table(
+                $this
+                    ->cloneWithout(['columns' => [], 'orders' => [], 'limit' => null])
+                    ->select(new Expression('1'))
+            )
+            ->count();
+    }
+
+    /**
+     * Set the limit and offset for a given page.
+     *
+     * @param  int  $page
+     * @param  int  $perPage
+     * @return $this
+     */
+    public function forPage($page, $perPage = 15)
+    {
+        return $this->limit($perPage, ($page - 1) * $perPage);
     }
 
     public function getConnection(): Connection

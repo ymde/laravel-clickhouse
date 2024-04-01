@@ -6,7 +6,7 @@ namespace Bavix\LaravelClickHouse\Tests\Unit\Database;
 
 use Bavix\LaravelClickHouse\Database\Connection;
 use Bavix\LaravelClickHouse\Database\Query\Builder;
-use PHPUnit\Framework\TestCase;
+use Bavix\LaravelClickHouse\Tests\TestCase;
 use Tinderbox\Clickhouse\Exceptions\ClientException;
 
 class ConnectionTest extends TestCase
@@ -19,11 +19,7 @@ class ConnectionTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->connection = new Connection([
-            'host' => 'localhost',
-            'port' => '8123',
-            'database' => 'default',
-        ]);
+        $this->connection = $this->getConnection('bavix::clickhouse');
     }
 
     public function testQuery(): void
