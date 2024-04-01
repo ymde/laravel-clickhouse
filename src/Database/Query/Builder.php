@@ -19,7 +19,7 @@ class Builder extends BaseBuilder
         __call as macroCall;
     }
 
-    protected $connection;
+    protected Connection $connection;
 
     public function __construct(
         Connection $connection,

@@ -10,10 +10,7 @@ use Tinderbox\ClickhouseBuilder\Query\Grammar;
 
 class Connection extends \Tinderbox\ClickhouseBuilder\Integrations\Laravel\Connection
 {
-    /**
-     * @return Builder|\Tinderbox\ClickhouseBuilder\Integrations\Laravel\Builder
-     */
-    public function query()
+    public function query(): Builder
     {
         return new Builder($this, new Grammar());
     }
