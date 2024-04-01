@@ -36,13 +36,11 @@ ENGINE = MergeTree()
 PRIMARY KEY (user_id, timestamp)');
         self::assertTrue($result);
 
-
-
         self::assertTrue(FirstTableEntry::query()->insert([
-            'user_id'        => 1,
-            'message'        => 'hello world',
+            'user_id' => 1,
+            'message' => 'hello world',
             'timestamp' => new \DateTime(),
-            'metric'        => 42,
+            'metric' => 42,
         ]));
 
         self::assertCount(1, FirstTableEntry::query()->paginate()->items());

@@ -131,8 +131,12 @@ class Builder extends BaseBuilder
         return (int) $this->getConnection()
             ->table(
                 $this
-                    ->cloneWithout(['columns' => [], 'orders' => [], 'limit' => null])
-                    ->select(new Expression('1'))
+                    ->cloneWithout([
+                        'columns' => [],
+                        'orders' => [],
+                        'limit' => null,
+                    ])
+                    ->select(new Expression('1')), null
             )
             ->count();
     }

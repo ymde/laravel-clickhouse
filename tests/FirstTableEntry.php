@@ -13,10 +13,5 @@ class FirstTableEntry extends Model
      */
     protected $table = 'my_first_table';
 
-    protected $fillable = [
-        'user_id',
-        'message',
-        'timestamp',
-        'metric',
-    ];
+    protected $fillable = ['user_id', 'message', 'timestamp', 'metric'];
 }
