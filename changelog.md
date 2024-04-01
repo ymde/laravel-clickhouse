@@ -1,5 +1,13 @@
 # Changelog
 
+## 3.0.3 - 2024-04-01
+
+### What's Changed
+
+* init fixes by [@rez1dent3](https://github.com/rez1dent3) in https://github.com/bavix/laravel-clickhouse/pull/11
+
+**Full Changelog**: https://github.com/bavix/laravel-clickhouse/compare/3.0.2...3.0.3
+
 ## 3.0.2 - 2024-04-01
 
 ### What's Changed
