@@ -1,5 +1,13 @@
 # Changelog
 
+## 3.0.2 - 2024-04-01
+
+### What's Changed
+
+* Method Bavix\LaravelClickHouse\Database\Query\Builder::getCountForPagination does not exist  by [@rez1dent3](https://github.com/rez1dent3) in https://github.com/bavix/laravel-clickhouse/pull/10
+
+**Full Changelog**: https://github.com/bavix/laravel-clickhouse/compare/3.0.1...3.0.2
+
 ## 3.0.1 - 2024-03-14
 
 ### What's Changed
