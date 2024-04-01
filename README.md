@@ -13,6 +13,7 @@ Laravel Clickhouse - Eloquent model for ClickHouse.
 > [!IMPORTANT]
 > I recommend using the standard postgres/mysql interface for clickhouse. More details here: https://clickhouse.com/docs/en/interfaces/mysql
 
+The implementation is provided as is. Further work with the library only through contributors. Added linters, tests and much more. To make it easier for you to send PR.
 
 ## Get started
 ```sh
